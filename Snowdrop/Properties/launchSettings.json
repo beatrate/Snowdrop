@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Snowdrop": {
+      "commandName": "Project",
+      "commandLineArgs": "new blog"
+    }
+  }
+}
