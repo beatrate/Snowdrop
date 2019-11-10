@@ -1,5 +1,6 @@
-﻿using CommandLine;
-using System.IO;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SharpYaml.Serialization;
+using System.Collections.Generic;
 
 namespace Snowdrop
 {
@@ -7,13 +8,18 @@ namespace Snowdrop
 	{
 		private static int Main(string[] args)
 		{
-			var runner = new EngineRunner();
-			return Parser.Default.ParseArguments<NewOptions, GenerateOptions>(args)
-				.MapResult(
-					(NewOptions options) => runner.RunNew(options),
-					(GenerateOptions options) => runner.RunGenerate(options),
-					errors => runner.HandleErrors(errors)
-				);
+			var serviceCollection = new ServiceCollection();
+			ConfigureServices(serviceCollection);
+			var serviceProvider = serviceCollection.BuildServiceProvider();
+			var app = serviceProvider.GetService<App>();
+			return app.Run(args);
+		}
+
+		private static void ConfigureServices(IServiceCollection serviceCollection)
+		{
+			serviceCollection.AddTransient<IBlogGenerator, BlogGenerator>();
+			serviceCollection.AddTransient<IBlogEngine, BlogEngine>();
+			serviceCollection.AddTransient<App>();
 		}
 	}
 }
