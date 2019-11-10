@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SharpYaml.Serialization;
-using System.Collections.Generic;
 
 namespace Snowdrop
 {

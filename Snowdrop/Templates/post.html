@@ -4,8 +4,14 @@
 <head>
     <meta charset="utf-8" />
     <title>{{ page.title }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple@3.3.1/dist/siimple.min.css">
 </head>
 <body>
-    {{ content | raw }}
+    <div class="siimple-card">
+        <div class="siimple-card-header">{{ page.title }}</div>
+        <div class="siimple-card-body">
+            {{ content | raw }}
+        </div>
+    </div>
 </body>
 </html>
