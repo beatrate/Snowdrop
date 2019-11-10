@@ -2,7 +2,8 @@
   "profiles": {
     "Snowdrop": {
       "commandName": "Project",
-      "commandLineArgs": "new blog"
+      "commandLineArgs": "generate",
+      "workingDirectory": "C:\\Code\\Snowdrop\\Snowdrop\\bin\\fooblog"
     }
   }
 }
