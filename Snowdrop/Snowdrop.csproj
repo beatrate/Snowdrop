@@ -10,6 +10,7 @@
     <PackageReference Include="Fluid.Core" Version="1.0.0-beta-9608" />
     <PackageReference Include="Markdig" Version="0.18.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.0-preview2.19525.4" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="3.0.1" />
     <PackageReference Include="SharpYaml" Version="1.6.5" />
   </ItemGroup>
 
@@ -20,8 +21,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Templates\about.liquid" />
     <None Remove="Templates\hello.md" />
-    <None Remove="Templates\index.html" />
+    <None Remove="Templates\index.liquid" />
+    <None Remove="Templates\navbar.liquid" />
+    <None Remove="Templates\style.css" />
   </ItemGroup>
 
 </Project>

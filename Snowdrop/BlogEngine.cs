@@ -36,18 +36,22 @@ namespace Snowdrop
 			Directory.CreateDirectory(postsPath);
 			Directory.CreateDirectory(sitePath);
 			Directory.CreateDirectory(templatesPath);
-			File.WriteAllText(Path.Combine(basePath, "index.html"), File.ReadAllText(Path.Combine(internalTemplatePath, "index.html")));
+			File.WriteAllText(Path.Combine(basePath, "index.liquid"), File.ReadAllText(Path.Combine(internalTemplatePath, "index.liquid")));
+			File.WriteAllText(Path.Combine(basePath, "about.liquid"), File.ReadAllText(Path.Combine(internalTemplatePath, "about.liquid")));
 			File.WriteAllText(Path.Combine(postsPath, "hello.md"), File.ReadAllText(Path.Combine(internalTemplatePath, "hello.md")));
-			File.WriteAllText(Path.Combine(templatesPath, "post.html"), File.ReadAllText(Path.Combine(internalTemplatePath, "post.html")));
+			File.WriteAllText(Path.Combine(templatesPath, "post.liquid"), File.ReadAllText(Path.Combine(internalTemplatePath, "post.liquid")));
+			File.WriteAllText(Path.Combine(templatesPath, "navbar.liquid"), File.ReadAllText(Path.Combine(internalTemplatePath, "navbar.liquid")));
+			File.WriteAllText(Path.Combine(basePath, "style.css"), File.ReadAllText(Path.Combine(internalTemplatePath, "style.css")));
 		}
 
 		public void GenerateBlog()
 		{
 			var posts = FindWithExtension(postsPath, ".md").ToList();
-			var pages = FindWithExtension(basePath, ".html").ToList();
-			var templates = FindWithExtension(templatesPath, ".html").ToList();
+			var pages = FindWithExtension(basePath, ".html", ".liquid").ToList();
+			var templates = FindWithExtension(templatesPath, ".html", ".liquid").ToList();
+			var styles = FindWithExtension(basePath, ".css").ToList();
 
-			var input = new InputBlogContext { Posts = posts, Pages = pages, Templates = templates };
+			var input = new InputBlogContext { IncludePath = templatesPath, Posts = posts, Pages = pages, Templates = templates };
 			var output = generator.Generate(input);
 			if(Directory.Exists(sitePath))
 			{
@@ -62,12 +66,21 @@ namespace Snowdrop
 				Directory.CreateDirectory(Path.GetDirectoryName(path));
 				File.WriteAllText(path, page.Content);
 			}
+
+			foreach(RawFile file in styles)
+			{
+				File.WriteAllText(Path.Combine(sitePath, file.Name), file.Content);
+			}
 		}
 
-		private IEnumerable<RawFile> FindWithExtension(string path, string extension)
+		private IEnumerable<RawFile> FindWithExtension(string path, params string[] extensions)
 		{
 			return Directory.GetFiles(path)
-				.Where(f => Path.GetExtension(f).Equals(extension, StringComparison.InvariantCultureIgnoreCase))
+				.Where(f =>
+				{
+					string currentExtension = Path.GetExtension(f);
+					return extensions.Any(e => currentExtension.Equals(e, StringComparison.InvariantCultureIgnoreCase));
+				})
 				.Select(f => new RawFile { Path = f, Name = Path.GetFileName(f), Content = File.ReadAllText(f) });
 		}
 	}

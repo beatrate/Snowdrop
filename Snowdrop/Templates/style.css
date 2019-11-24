@@ -1,0 +1,16 @@
+﻿body {
+    background-color: #f2f7f7;
+}
+
+.card-title {
+    display: block;
+    text-decoration: none;
+}
+
+    .card-title:link, .card-title:visited {
+        color: white;
+    }
+
+    .card-title:hover, .card-title:active {
+        color: white;
+    }
