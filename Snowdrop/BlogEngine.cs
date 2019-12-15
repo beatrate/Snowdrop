@@ -42,6 +42,8 @@ namespace Snowdrop
 			File.WriteAllText(Path.Combine(templatesPath, "post.liquid"), File.ReadAllText(Path.Combine(internalTemplatePath, "post.liquid")));
 			File.WriteAllText(Path.Combine(templatesPath, "navbar.liquid"), File.ReadAllText(Path.Combine(internalTemplatePath, "navbar.liquid")));
 			File.WriteAllText(Path.Combine(basePath, "style.css"), File.ReadAllText(Path.Combine(internalTemplatePath, "style.css")));
+
+			File.WriteAllText(Path.Combine(basePath, "Dockerfile"), File.ReadAllText(Path.Combine(internalTemplatePath, "Dockerfile")));
 		}
 
 		public void GenerateBlog()

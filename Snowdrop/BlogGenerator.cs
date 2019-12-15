@@ -165,7 +165,7 @@ namespace Snowdrop
 				templateContext.MemberAccessStrategy.Register<ViewPage>();
 				templateContext.MemberAccessStrategy.Register<ViewPost>();
 				templateContext.MemberAccessStrategy.Register<ViewSite>();
-				templateContext.Filters.AddFilter("relative_url", (input, arguments, context) => new StringValue(GetRelativeUrl(input.ToStringValue(), PathToUrl(generated.RelativePath))));
+				templateContext.Filters.AddFilter("relative_url", (input, args, ctx) => new StringValue(GetRelativeUrl(input.ToStringValue(), PathToUrl(generated.RelativePath))));
 
 				string templateContent = null;
 				
